@@ -1,0 +1,19 @@
+внутригрупповая сумма квадратов (Python + numpy + scipy):
+
+import numpy as np
+from scipy.spatial.distance import cdist
+from scipy.cluster.vq import kmeans
+
+
+# Почему-то теперь элементы массива(точки) должны быть float или double...
+points = np.array([[1,2], [2,1], [2,2], [1,3], [6,7], [6,5], [7,8], [8,8]], dtype=float)
+
+# Список найденных центроидов и дисперсия
+centroids, disp = kmeans(points, 1)
+
+# Перебираем найденные центроиды, метод <kmeans> всегда возвратит двумерный массив
+# оба параметра метода <cdist> должны быть двумерными массивами
+results = ( sum(cdist(points, [centroid,])**2) for centroid in centroids )
+
+
+print( list(results) )
