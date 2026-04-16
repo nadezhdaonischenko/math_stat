@@ -1,0 +1,41 @@
+pca_marks <- prcomp(data.frame(R=mark_R,Stat=mark_Stat), center = T, scale=T)
+summary(pca_marks)
+biplot(pca_marks)
+
+
+Реализация PCA  на питоне:
+
+import numpy as np
+from pca import pca
+import matplotlib.pyplot as plt
+
+# генерируем линейную зависимость оценок
+R = np.random.randint(75,120,50)
+stat = [elem + np.random.randint(-10,10) for elem in R]
+X = np.column_stack((R, stat))
+
+x = X[:,0]
+y = X[:,1]
+
+# рисуем диаграмму рассеивания 
+plt.figure(figsize=(6, 6))
+plt.scatter(x, y)
+
+# добавляем регрессионную прямую
+b1, b0 = np.polyfit(x, y, 1) #  b0 - intercept, b1 - slope
+plt.plot(x, b0 + b1*x, color='red')
+plt.grid()
+plt.show()
+
+используем модуль pca:
+
+# настраиваем модель с 2-мя компонентами
+model = pca(n_components=2)
+results = model.fit_transform(X)
+
+# столбчатая диаграмма
+fig, ax = model.plot()
+
+# диаграмма рассеивания с новыми координатами
+fig, ax = model.biplot(n_feat=4)
+plt.show()
