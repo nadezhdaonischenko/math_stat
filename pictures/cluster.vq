@@ -31,3 +31,35 @@ N <- NbClust(dt, distance = "euclidean",
              min.nc = 2, max.nc = 15, method = "complete", 
              index = "alllong")
 }
+
+
+Метод локтя (elbow) на данных о лепестках в python^\ (график перегиба):
+
+{
+from sklearn.datasets import load_iris
+from sklearn.cluster import KMeans
+import pandas as pd
+
+plt.figure(figsize=(6, 6))
+plt.style.use('seaborn-white')
+
+# грузим данные 
+data = load_iris()
+df = pd.DataFrame(data.data, columns=data.feature_names)
+X = df[['sepal length (cm)','petal width (cm)']].values
+
+# определяем необходимое количество кластеров
+total_wcss=[]
+n_clusters = 8
+
+for i in range(1,n_clusters): 
+    kmeans = KMeans(n_clusters=i, init ='k-means++', max_iter=300,  n_init=10,random_state=0 )
+    kmeans.fit(X)
+    total_wcss.append(kmeans.inertia_)
+
+plt.plot(range(1,n_clusters),total_wcss)
+plt.title('The Elbow Method Graph')
+plt.xlabel('Number of clusters')
+plt.ylabel('Total_WCSS')
+plt.show()
+}
