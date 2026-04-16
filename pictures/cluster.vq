@@ -34,8 +34,11 @@ N <- NbClust(dt, distance = "euclidean",
 
 
 Метод локтя (elbow) на данных о лепестках в python^\ (график перегиба):
+1.
+from kneed import KneeLocator
+​​​​​​​KneeLocator(...) или 
 
-{
+2. {
 from sklearn.datasets import load_iris
 from sklearn.cluster import KMeans
 import pandas as pd
