@@ -1,0 +1,2 @@
+fit <- factanal(swiss, factors = 2, rotation = "varimax")
+print(fit)
