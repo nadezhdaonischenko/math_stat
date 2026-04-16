@@ -1,5 +1,6 @@
 внутригрупповая сумма квадратов (Python + numpy + scipy):
 
+{
 import numpy as np
 from scipy.spatial.distance import cdist
 from scipy.cluster.vq import kmeans
@@ -14,6 +15,19 @@ centroids, disp = kmeans(points, 1)
 # Перебираем найденные центроиды, метод <kmeans> всегда возвратит двумерный массив
 # оба параметра метода <cdist> должны быть двумерными массивами
 results = ( sum(cdist(points, [centroid,])**2) for centroid in centroids )
-
+}
 
 print( list(results) )
+
+
+Можно для определения оптимального числа кластеров воспользоваться пакетом NbClust:
+
+{
+install.packages("NbClust")
+library(NbClust)
+data(iris)
+dt <- iris[, 1:4]
+N <- NbClust(dt, distance = "euclidean",
+             min.nc = 2, max.nc = 15, method = "complete", 
+             index = "alllong")
+}
