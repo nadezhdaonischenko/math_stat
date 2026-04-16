@@ -1,2 +1,13 @@
 fit <- factanal(swiss, factors = 2, rotation = "varimax")
 print(fit)
+
+Пример применения факторного анализа на Python:
+import pandas as pd
+import numpy as np
+import factor_analyzer as factor
+# Загрузка данных
+data = pd.read_csv('data.csv')
+# Проведение факторного анализа
+fa = factor.FactorAnalyzer()
+fa.analyze(data, 3, method='principal')
+fa.loadings
