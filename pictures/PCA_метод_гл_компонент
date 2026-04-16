@@ -39,3 +39,29 @@ fig, ax = model.plot()
 # диаграмма рассеивания с новыми координатами
 fig, ax = model.biplot(n_feat=4)
 plt.show()
+
+data(swiss)
+fit <- prcomp(swiss, center = T)
+plot(fit, type = "l")
+summary(fit)
+biplot(fit)
+
+А можно то же сделать с использованием библиотеки ggbiplot:
+
+install.packages("devtools")
+library(devtools)
+install_github("vqv/ggbiplot")
+library(ggbiplot)
+
+dt <- swiss
+dt$is_catholic <- ifelse(swiss$Catholic > 50, 1, 0)
+dt$is_catholic <- factor(dt$is_catholic)
+fit <- prcomp(swiss, center = T)
+g <- ggbiplot(fit, obs.scale = 1, var.scale = 1,
+              group = dt$is_catholic,
+              ellipse = TRUE,
+              circle = TRUE)
+g <- g + scale_color_discrete(name = '')
+g <- g + theme(legend.direction = 'horizontal',
+               legend.position = 'top')
+print(g)
